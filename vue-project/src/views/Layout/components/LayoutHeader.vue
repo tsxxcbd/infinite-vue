@@ -47,10 +47,11 @@ const handleLog= () => {
 //搜索跳转
 const keyword = ref();
 const navigateToSearch = () => {
-  // 使用 $router.push 将 keyword 作为参数传递给 search.vue
   router.push({
-    path: '/search',
-    // query: { keyword: keyword }
+    path: `/search`,
+    query: {
+          keyword: keyword.value
+    }
   });
 };
 

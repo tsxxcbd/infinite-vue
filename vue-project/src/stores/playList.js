@@ -2,9 +2,8 @@ import {defineStore} from 'pinia'
 import {ref} from 'vue'
 import useUserInfoStore from './userInfo.js'
 import {                
-    deleteLikeList,
   deleteCreateListAPI,
-  addSongIntoList,getLikeSongsAPI,getLikeListAPI,getCreateListAPI,
+  addSongToListAPI,getLikeSongsAPI,getLikeListAPI,getCreateListAPI,
     addCreateListAPI
  } from '../api/playlist'
 
@@ -14,35 +13,50 @@ const useListStore = defineStore('useListStore',()=>{
 
     const likeSongs = ref([])
     const likeList = ref([])
-    const createList = ref([])
+    const createList = ref([
+        {
+            id: 1,
+            name: 'List 1',
+            profile: 'Profile 1',
+            number: 0,
+            creatorname: null
+        },
+    ])
 
     const getLikeSongs = async()=>{
         console.log("55555")
         const res = await getLikeSongsAPI(userStore.info.id);
-        likeSongs.value = res
+        likeSongs.value = res.data
     }
 
       
     const getLikeList = async()=>{
         const res = await getLikeListAPI(userStore.info.id);
-        likeList.value = res
+        likeList.value = res.data
     }
 
 
     const getCreateList = async()=>{
         const res = await getCreateListAPI(userStore.info.id);
-        createList.value = res
+        createList.value = res.data
     }
 
     const delCreateList = async (id) => {
         await deleteCreateListAPI(id);
-        await getCreateListAPI(userStore.info.id);
+        await getCreateList()
     }
 
     const addCreateList = async(data) => {
-        const res = await addCreateListAPI(data)
-        await getCreateListAPI(userStore.info.id);
+        await addCreateListAPI(data)
+        await getCreateList()
     } 
+
+    const addSongToList = async(data) => {
+        await addSongToListAPI(data)
+        await getCreateList()
+    }
+
+
       
 
 
@@ -54,7 +68,8 @@ const useListStore = defineStore('useListStore',()=>{
         getLikeSongs,
         getCreateList,
         delCreateList,
-        addCreateList
+        addCreateList,
+        addSongToList
     }
 
 },{persist:true})

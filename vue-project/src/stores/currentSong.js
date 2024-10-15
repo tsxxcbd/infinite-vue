@@ -1,5 +1,8 @@
 import {defineStore} from 'pinia'
 import {ref} from 'vue'
+import { addLikeSongAPI ,delLikeSongAPI, getLikeSongsAPI} from '../api/playlist';
+import useUserInfoStore from './userInfo.js'
+
 
 const currentsongStore = defineStore('currentsongInfo',()=>{
     //定义状态相关的内容
@@ -11,8 +14,13 @@ const currentsongStore = defineStore('currentsongInfo',()=>{
       time: '',
       albumCover: ''
   })
+
+
     const source = ref(``);
     const LRC = ref(``);
+
+    const userInfo = useUserInfoStore()
+    const isLike = ref(false)
 
     const getDetail = async () => {
         const songDetailsUrl = ref(`http://localhost:3000/song/detail?ids=${songId.value}`);
@@ -40,6 +48,7 @@ const currentsongStore = defineStore('currentsongInfo',()=>{
           } catch (error) {
             console.error('获取歌曲详情失败:', error);
           }
+        checkLike()
     }
 
     const getAudio = async () => {
@@ -134,6 +143,22 @@ const currentsongStore = defineStore('currentsongInfo',()=>{
         console.error('获取歌词失败:', error);
       }
     }
+
+    const addLikeSong = async(data) => {
+      const res = await addLikeSongAPI(data)
+      currentsongStore.isLike = true
+    }
+    
+    const delLikeSong = async(data) => {
+      const res = await delLikeSongAPI(data)
+      currentsongStore.isLike = false
+    }
+
+    const checkLike = async() => {
+      const res = await getLikeSongsAPI(userInfo.info.id)
+      let idArray = res.data.filter(obj => obj && obj.id).map(obj => obj.id);
+      isLike.value = idArray.includes(currentsongStore.songId);
+    }
     
 
     return {
@@ -141,9 +166,12 @@ const currentsongStore = defineStore('currentsongInfo',()=>{
         songInfo,
         source,
         LRC,
+        isLike,
         getDetail,
         getAudio,
-        getLyrics
+        getLyrics,
+        addLikeSong,
+        delLikeSong
     }
 
 },{ persist: true })

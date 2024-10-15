@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted,  ref,watch } from 'vue'
-import { Delete } from '@element-plus/icons-vue'
+import { Delete, Star } from '@element-plus/icons-vue'
 import { VideoPause, VideoPlay } from '@element-plus/icons-vue'
 import currentsongStore from '../../../stores/currentSong.js'
 import currentListStore from '../../../stores/currentList.js'
@@ -8,7 +8,9 @@ import {useRouter} from 'vue-router'
 import { RTL } from 'element-plus/es/components/virtual-list/src/defaults'
 import lkSelect from '../../../views/lk-select.vue'
 import { storeToRefs } from 'pinia'
+import useUserInfoStore from '../../../stores/userInfo'
 
+const userInfo = useUserInfoStore()
 const router = useRouter()
 
 const currentSong = currentsongStore();
@@ -320,6 +322,8 @@ const handleRowDoubleClick = (row) => {
 
             <div class="icons">
                 <div class="left">
+                    <el-button v-if="!currentSong.isLike" type="primary" circle class="iconfont icon-follow" @click="currentSong.addLikeSong({songid: currentSong.songId, userid: userInfo.info.id})"/>
+                    <el-button v-else type="primary" circle class="iconfont icon-follow-fill" @click="currentSong.delLikeSong({songid: currentSong.songId, userid: userInfo.info.id})"/>
                     <el-button type="primary" circle class="iconfont icon-comment" @click="$router.push('/comment')" />
                 </div>
 
