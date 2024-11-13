@@ -278,7 +278,9 @@ const handleRowDoubleClick2 =async(row) => {
 </template>
   
 
-<style lang="less">
+<style lang="less" >
+
+
 
 .el-card {
     margin-top: 30px;

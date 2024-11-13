@@ -190,6 +190,7 @@ watch(songId,(songId, newsongId)=> {
     currentSong.getAudio();
     paused.value = true
     console.log(paused.value+"kkkk")
+    isLike.value = currentSong.isLike
 })
 
 
@@ -272,6 +273,8 @@ const handleRowDoubleClick = (row) => {
     songId.value = row.songid
 }
 
+const isLike = ref(currentSong.isLike)
+
 
 </script>
 
@@ -322,8 +325,8 @@ const handleRowDoubleClick = (row) => {
 
             <div class="icons">
                 <div class="left">
-                    <el-button v-if="!currentSong.isLike" type="primary" circle class="iconfont icon-follow" @click="currentSong.addLikeSong({songid: currentSong.songId, userid: userInfo.info.id})"/>
-                    <el-button v-else type="primary" circle class="iconfont icon-follow-fill" @click="currentSong.delLikeSong({songid: currentSong.songId, userid: userInfo.info.id})"/>
+                    <el-button v-if="!isLike" type="primary" circle class="iconfont icon-follow" @click="currentSong.addLikeSong({songid: currentSong.songId, userid: userInfo.info.id}),isLike = true"/>
+                    <el-button v-else type="primary" circle class="iconfont icon-follow-fill" @click="currentSong.delLikeSong({songid: currentSong.songId, userid: userInfo.info.id}),isLike=false"/>
                     <el-button type="primary" circle class="iconfont icon-comment" @click="$router.push('/comment')" />
                 </div>
 

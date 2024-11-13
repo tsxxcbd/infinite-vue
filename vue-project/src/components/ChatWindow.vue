@@ -2,7 +2,7 @@
 import {Plus} from '@element-plus/icons-vue'
 import { ref } from 'vue'
 import { ElForm, ElButton, ElInput, ElRow, ElCol } from 'element-plus';
-import { langchaincaht } from '../api/langchain.js'
+import { chatAPI } from '../api/langchain.js'
 export default {
   components: {
     ElForm,
@@ -35,15 +35,15 @@ export default {
       // 发送请求并获取回复
       console.log(this.inputText);
       try {
-        const response = await langchaincaht(this.inputText);
+        const response = await chatAPI(this.inputText);
         console.log(response);
 
         // 解析 JSON 字符串
-        const responseData = JSON.parse(response);
+        // const responseData = JSON.parse(response);
         // 获取 ans 字段的值
-        const answerText = responseData.ans;
-        this.resSongId = responseData.id;
-        this.addcurrentsongid = responseData.id;
+        const answerText = response.ans;
+        this.resSongId = response.id;
+        this.addcurrentsongid = response.id;
         console.log(answerText);
 
         // 将回答添加到 messages 数组中

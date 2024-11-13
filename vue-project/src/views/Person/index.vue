@@ -280,20 +280,14 @@ const likeSongs = ref([])
   width: 1300px;
   margin-top: 20px;
   margin-left: 60px;
-
 }
 
 
 
-.my-tabs>.el-tabs__item.is-active {
-  color: #2E8CAC;
-
-}
 
 .my-tabs {
   ::v-deep .el-tabs__item {
     color: #fff;
-    vertical-align: middle;
     margin-left: 70px;
   }
 
@@ -303,16 +297,17 @@ const likeSongs = ref([])
 
   .el-tabs__item:hover {
     color: #2E8CAC;
-  }
-
+  }         
+  
   .el-tabs__active-bar {
-    background-color: #2E8CAC;
-    text-align: center;
-    width: 90px !important;
-    /* 不加important  不会生效，important会覆盖行内样式权限级别*/
-    left: -1%;
-    /* 根据实际情设置，尽量居中就行*/
-  }
+  background-color: #2E8CAC;
+  text-align: center;
+  width: 100px !important;
+  /* 不加important  不会生效，important会覆盖行内样式权限级别*/
+  left: 0%;
+  /* 根据实际情设置，尽量居中就行*/
+}
+
 }
 
 .el-carousel__item {
@@ -345,43 +340,39 @@ const likeSongs = ref([])
 
 }
 
-.like-tabs {
-  color: #FFFFFF;
-  margin-top: 10px;
+// .like-tabs {
+//   color: #FFFFFF;
+//   margin-top: 10px;
 
-  .like-tabs>.el-tabs__item.is-active {
-    color: #2E8CAC;
+//   .like-tabs>.el-tabs__item.is-active {
+//     color: #2E8CAC;
 
-  }
+//   }
 
-  .el-tabs__item {
-    color: #fff;
-    font-size: 14px;
-    vertical-align: middle;
-    margin-left: 60px;
-    margin-right: 60px;
+//   .el-tabs__item {
+//     color: #fff;
+//     font-size: 14px;
+//     vertical-align: middle;
 
-  }
+//   }
 
-  .el-tabs__item.is-active {
-    color: #2E8CAC;
-  }
+//   .el-tabs__item.is-active {
+//     color: #2E8CAC;
+//   }
 
-  .el-tabs__item:hover {
-    color: #2E8CAC;
-  }
+//   .el-tabs__item:hover {
+//     color: #2E8CAC;
+//   }
 
 
 
-  .el-tabs__nav-wrap::after {
+//   .el-tabs__nav-wrap::after {
 
-    display: none;
-  }
+//     display: none;
+//   }
 
-  .el-tabs__active-bar {
-    display: none;
-  }
-}
+
+// }
 
 
 
@@ -410,20 +401,41 @@ h2 {
 }
 
 
-.table-wrapper /deep/ .el-table,
-.el-table__expanded-cell {
+.songs {
+    margin-left: 60px;
   background-color: transparent;
+  
+}
+
+
+.el-table th>.cell {
+  color: #7F7F7F;
+  font-size: 16px;
+  border: 0px;
+}
+
+
+
+
+
+.el-table tr {
+  background-color: transparent;
+  color: white;
+  font-size: 16px;
+  height: 60px;
+
 
 }
 
-.table-wrapper /deep/ .el-table tr {
-  background-color: transparent !important;
+.el-table td.el-table__cell {
+  border: 0px;
 }
 
-.table-wrapper /deep/ .el-table--enable-row-transition .el-table__body td,
-.el-table .cell {
-  background-color: transparent;
 
+
+.el-table--enable-row-hover .el-table__body tr:hover>td {
+  background-color: rgba(38, 38, 38, 0.75) !important;
+  color: white !important;
 }
 </style>
 
@@ -440,4 +452,6 @@ h2 {
     font-style: italic;
   }
 }
+
+
 </style>

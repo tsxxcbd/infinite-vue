@@ -1,6 +1,5 @@
 import request from '@/utils/request.js'
 
-export const langchaincaht = (inputText)=>{
-    console.log('/llm/chat?input="'+inputText+'"')
+export const chatAPI = (inputText) => {
     return request.get('/llm/chat?input="'+inputText+'"');
 }

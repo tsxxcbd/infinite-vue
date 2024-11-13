@@ -22,7 +22,7 @@ export default defineConfig({
 
       },
       '/llm':{
-        target:'http://localhost:5000',//后台服务所在的源
+        target:'http://127.0.0.1:5000',//后台服务所在的源
         changeOrigin:true,//修改源
         rewrite: (path)=>path.replace(/^\/llm/,'')
       }
