@@ -8,6 +8,7 @@ import Player from '@/views/Player/index.vue'
 import Person from '@/views/Person/index.vue'
 import Home from '@/views/Home/index.vue'
 import Search from '@/views/Search/index.vue'
+import Update from '@/views/Person/UpdatePerson.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +35,10 @@ const router = createRouter({
           {
             path: 'person',
             component: Person
+          },          
+          {
+            path: 'update',
+            component: Update
           },
           {
             path: 'search',

@@ -46,6 +46,11 @@ onMounted(()=>{
 
 const likeSongs = ref([])
 
+import { useRouter } from 'vue-router'
+
+const router = useRouter();
+
+
 </script>
 
 <template>
@@ -55,6 +60,7 @@ const likeSongs = ref([])
       <el-image style="width: 120px; height: 120px" :src="userInfo.info.photo" class="avatar2" />
       <h4 class="username2">{{ userInfo.info.name }}</h4>
       <el-button class="refresh" :icon="Plus" circle @click="AdddialogVisible = true"></el-button>
+      <el-button @click="$router.push('/update')">编辑个人资料</el-button>
     </div>
 
     <div class="person-pages">

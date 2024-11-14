@@ -98,7 +98,6 @@ const  {info} = storeToRefs(userInfo);
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item  @click="$router.push('/person')">个人主页</el-dropdown-item>
-                <el-dropdown-item @click="$router.push('/login')">编辑资料</el-dropdown-item>
                 <el-dropdown-item @click="$router.push('/login')">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </template>

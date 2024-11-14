@@ -136,8 +136,8 @@ const doLogin = () => {
                     </el-form-item>
                     <el-form-item class="flex">
                         <div class="flex">
-                            <el-checkbox>记住我</el-checkbox>
-                            <el-link type="primary" :underline="false">忘记密码？</el-link>
+                            <!-- <el-checkbox>记住我</el-checkbox> -->
+                            <!-- <el-link type="primary" :underline="false">登录即表明同意隐私条款</el-link> -->
                         </div>
                     </el-form-item>
                     <!-- 登录按钮 -->
