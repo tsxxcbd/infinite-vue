@@ -66,3 +66,20 @@ export const getListAPI = (id) => {
         method: 'GET',
     })
 }
+
+export const delOneSongAPI = (data) => {
+    return request({
+        url:`/api/PlayList/deleteonesong`,
+        method: 'DELETE',
+        data
+    })
+}
+
+
+export const addLikeListAPI = (data) => {
+    return request({
+        url:`/api/PlayList/likelist`,
+        method: 'POST',
+        data
+    })
+}

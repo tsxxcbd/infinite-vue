@@ -175,6 +175,8 @@ const  {info} = storeToRefs(userInfo);
   font-weight: bold;
   font-style: italic;
   color: #FFFFFF;
+  user-select: none; 
+
 }
 
 .search-box {

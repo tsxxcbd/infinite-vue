@@ -3,6 +3,7 @@ import { ref, onMounted} from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessageBox, ElMessage,  } from 'element-plus'
 import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 import type { FormProps } from 'element-plus'
 const labelPosition = ref<FormProps['labelPosition']>('right')
@@ -167,21 +168,24 @@ const handleRowDoubleClick = (row) => {
     currentList.addSongToCurrent(selectedProps)
 }
 
-const handleRowDoubleClick2 =async(row) => {
-  const listid = parseInt(row.id, 10)
-  console.log(row.id)
-  console.log(listid)
-  const res = await getListAPI(listid)
-  res.data.songList.forEach(item => {
-    const selectedProps = {
-        album: item.album,
-        songName: item.songName, // 确保使用正确的属性名
-        artist: item.artist,
-        songid: item.id // 使用 id 属性作为 songid
-    };
-    currentList.currentList = []
-    currentList.addSongToCurrent(selectedProps);
-});
+const router = useRouter()
+
+const handleRowDoubleClick2 =(row) => {
+//   const listid = parseInt(row.id, 10)
+//   console.log(row.id)
+//   console.log(listid)
+//   const res = await getListAPI(listid)
+//   res.data.songList.forEach(item => {
+//     const selectedProps = {
+//         album: item.album,
+//         songName: item.songName, // 确保使用正确的属性名
+//         artist: item.artist,
+//         songid: item.id // 使用 id 属性作为 songid
+//     };
+//     currentList.currentList = []
+//     currentList.addSongToCurrent(selectedProps);
+// });
+  router.push(`playlist/${row.id}`)
 }
 
 
@@ -244,7 +248,7 @@ const handleRowDoubleClick2 =async(row) => {
 
   <el-table v-if="isPlayList" :data="searchResults" height="650" class="songs" 
       :header-cell-style="{ background:'transparent', height:'45px', color:'#000000', border:'none' }"
-      @click="handleRowDoubleClick2">
+      @row-dblclick="handleRowDoubleClick2">
       <el-table-column prop="name" label="歌单名" width="250px" />
       <el-table-column prop="number" label="歌曲数" width="250px" />
       <el-table-column prop="profile" label="简介" width="400px" />

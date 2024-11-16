@@ -63,14 +63,14 @@ onMounted(()=> {
             <h2>新歌速递</h2>
             <div class="song-box">
                 <el-table :data="newSongList" height="400px" class="songs" :show-header="false">
-                    <el-table-column prop="album" label="封面" width="600px" >
+                    <el-table-column prop="album" label="封面" width="400px" >
                         <template v-slot="scopeP">
                             <el-image :src="scopeP.row.album.picUrl" style="width: 100px; height: 100px">
                             </el-image>
                         </template>
                     </el-table-column>
                     <el-table-column prop="name" label="歌名" width="300px" />
-                    <el-table-column prop="artists[0].name" label="歌手" width="250px" />
+                    <el-table-column prop="artists[0].name" label="歌手" width="300px" />
                     <el-table-column label="播放" width="100px" prop="privilege">
                     <template v-slot="scope">
                         <el-button :icon="CaretRight" background="transparent" circle @click="playRecommend(scope.row.privilege.id),addToCurrent(scope.row)" />
@@ -91,6 +91,7 @@ onMounted(()=> {
 <style>
     .recommend-box {
         margin-left: 50px;
+        user-select: none; 
     }
 
     

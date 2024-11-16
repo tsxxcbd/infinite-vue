@@ -19,6 +19,21 @@ export const loginAPI = (data) => {
     })
 }
 
+export const setUserAPI = (data) => {
+    return request({
+        url:'/api/user/update',
+        method: 'POST',
+        data
+    })
+}
+
+export const getUserAPI = (id) => {
+    return request ({
+        url:`/api/user/${id}`,
+        method: 'GET'
+    })
+}
+
 
 
 

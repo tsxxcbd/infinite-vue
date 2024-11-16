@@ -5,26 +5,18 @@ import { useRouter } from 'vue-router';
 const form = reactive({
   name: '',
   desc: '',
-  region: '',
   date1: '',
-  date2: '',
-  delivery: false,
-  type: [],
-  sex: '男',
+  sex: '',
 })
 
 const router = useRouter()
 
-const onSubmit = () => {
-  console.log('submit!')
-  router.push('/person')
-}
-import { ArrowLeft } from '@element-plus/icons-vue'
+
+import { ArrowLeft, Upload } from '@element-plus/icons-vue'
 
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { Plus, Delete, ZoomIn } from '@element-plus/icons-vue'
-
 
 //上传用户头像涉及的变量
 let fileList = ref<{ item: any }[]>([]); //文件列表
@@ -57,6 +49,68 @@ const handlePictureCardPreview = (file: UploadFile) => {
   dialogVisible.value = true
 }
 
+
+
+import { setUserAPI } from '../../api/user';
+import useUserInfoStore from '../../stores/userInfo.js'
+
+const userInfo = useUserInfoStore();
+
+import type { UploadProps } from 'element-plus'
+
+const imageUrl = ref('')
+
+const handleAvatarSuccess: UploadProps['onSuccess'] = (
+  response,
+  uploadFile
+) => {
+  imageUrl.value = URL.createObjectURL(uploadFile.raw!)
+}
+
+const onSubmit = async() => {
+  console.log("9999"+imageUrl.value)
+  //console.log(fileList)
+  await calculateAge();
+  await setUserAPI({
+    nickname: form.name,
+    info: form.desc,
+    sex: form.sex,
+    age: age.value,
+    id: userInfo.info.id,
+    avatar: imageUrl.value
+  })
+
+  router.push('/person')
+
+}
+
+const age = ref<string | null>(null);   // 计算出的年龄（字符串类型）
+
+const calculateAge = () => {
+  if (!form.date1) {
+    age.value = null; // 如果生日未选择，年龄为空
+    return;
+  }
+
+  const today = new Date();
+  const birthDate = new Date(form.date1);
+
+  let calculatedAge = today.getFullYear() - birthDate.getFullYear();
+  const monthDifference = today.getMonth() - birthDate.getMonth();
+  const dayDifference = today.getDate() - birthDate.getDate();
+
+  // 如果当前日期还没到生日，则减1岁
+  if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+    calculatedAge--;
+  }
+
+  age.value = calculatedAge >= 0 ? `${calculatedAge} ` : "0 "; // 转为字符串并加上“岁”
+};
+
+import type { ElUpload } from "element-plus";
+
+// 为 `uploadAttach` 定义类型
+const uploadAttach = ref<InstanceType<typeof ElUpload> | null>(null);
 </script>
 
 <template>
@@ -67,7 +121,7 @@ const handlePictureCardPreview = (file: UploadFile) => {
             </template>
         </el-page-header>
         <div class="set-box">
-            <el-form class="set-form" :model="form" label-width="auto" style="max-width: 600px" :size="large">
+            <el-form class="set-form" :model="form" label-width="auto" style="max-width: 600px" >
                 <el-form-item label="昵称">
                 <el-input v-model="form.name" />
                 </el-form-item>
@@ -77,8 +131,8 @@ const handlePictureCardPreview = (file: UploadFile) => {
                 </el-form-item>
                 <el-form-item label="性别">
                     <el-radio-group v-model="form.sex">
-                        <el-radio value="0">男</el-radio>
-                        <el-radio value="1">女</el-radio>
+                        <el-radio label="0">男</el-radio>
+                        <el-radio label="1">女</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="生日">
@@ -87,7 +141,7 @@ const handlePictureCardPreview = (file: UploadFile) => {
                     v-model="form.date1"
                     type="date"
                     placeholder="选择您的生日"
-                    style="width: 100%"  :size="large"
+                    style="width: 100%"  
                     />
                 </el-col>
                 </el-form-item>
@@ -97,43 +151,43 @@ const handlePictureCardPreview = (file: UploadFile) => {
             </el-form>
 
 <!-- 上传头像 -->
-        <el-upload
-          action="#"
-          ref="upload_attach"
-          class="upload_demo"
-          :class="{ 'none-up': uploadDisabled }"
-          list-type="picture-card"
-          :before-upload="beforeUpload"
-          :on-remove="handleRemove"
-          :http-request="uploadFile"
-        >
-          <el-icon><Plus /></el-icon>
- 
-          <template #file="{ file }">
-            <div>
-              <img
-                class="el-upload-list__item-thumbnail"
-                :src="file.url"
-                alt=""
-              />
-              <span class="el-upload-list__item-actions">
-                <span
-                  class="el-upload-list__item-preview"
-                  @click="handlePictureCardPreview(file)"
-                >
-                  <el-icon><zoom-in /></el-icon>
-                </span>
-                <span
-                  class="el-upload-list__item-delete"
-                  @click="$refs.upload_attach.handleRemove(file)"
-                >
-                  <el-icon><Delete /></el-icon>
-                </span>
-              </span>
-            </div>
-          </template>
 
-        </el-upload>
+<el-upload
+    action="#"
+    ref="uploadAttach"
+    class="upload_demo"
+    :class="{ 'none-up': uploadDisabled }"
+    list-type="picture-card"
+    :on-remove="handleRemove"
+    :http-request="uploadFile"
+    :on-success="handleAvatarSuccess"
+  >
+    <el-icon><Plus /></el-icon>
+
+    <template #file="{ file }">
+      <div>
+        <img
+          class="el-upload-list__item-thumbnail"
+          :src="file.url"
+          alt=""
+        />
+        <span class="el-upload-list__item-actions">
+          <span
+            class="el-upload-list__item-preview"
+            @click="handlePictureCardPreview(file)"
+          >
+            <el-icon><zoom-in /></el-icon>
+          </span>
+          <span
+            class="el-upload-list__item-delete"
+            @click="uploadAttach?.handleRemove(file)"
+          >
+            <el-icon><Delete /></el-icon>
+          </span>
+        </span>
+      </div>
+    </template>
+  </el-upload>
         <!-- 头像放大展示 -->
         <el-dialog v-model="dialogVisible">
             <img style="max-width: 80%; height: auto;" :src="dialogImageUrl" alt="Preview Image" />

@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "7594160",
+      "name": "24gf-playlist4",
+      "font_class": "24gf-playlist4",
+      "unicode": "ea85",
+      "unicode_decimal": 60037
+    },
+    {
       "icon_id": "34453000",
       "name": "follow",
       "font_class": "follow",

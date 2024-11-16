@@ -6,7 +6,7 @@ import {
   addSongToListAPI,getLikeSongsAPI,getLikeListAPI,getCreateListAPI,
     addCreateListAPI
  } from '../api/playlist'
-
+import { ElMessage } from 'element-plus'
 const useListStore = defineStore('useListStore',()=>{
     //定义状态相关的内容
     const userStore = useUserInfoStore()
@@ -26,19 +26,31 @@ const useListStore = defineStore('useListStore',()=>{
     const getLikeSongs = async()=>{
         console.log("55555")
         const res = await getLikeSongsAPI(userStore.info.id);
-        likeSongs.value = res.data
+        if(res.code == 200) {
+            likeSongs.value = res.data
+
+        }
     }
 
       
     const getLikeList = async()=>{
         const res = await getLikeListAPI(userStore.info.id);
-        likeList.value = res.data
+        if(res.code == 200) {
+            likeList.value = res.data
+        }
     }
 
 
     const getCreateList = async()=>{
         const res = await getCreateListAPI(userStore.info.id);
-        createList.value = res.data
+        if(res.code == 200) {
+            createList.value = res.data
+        } else {
+            ElMessage({
+                type: "warning",
+                message: "暂无数据"
+            })
+        }
     }
 
     const delCreateList = async (id) => {

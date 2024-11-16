@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+ import { onMounted, ref } from 'vue'
 
 const hhhName = ref('third')
 const likeName = ref('third1')
@@ -12,7 +12,7 @@ const currentlistid = ref(0);
 const currentsongid = ref(0);
 const addcurrentsongId = ref(0)
 const addcurrentlistId = ref(0)
-const AdddialogVisible = ref(false)
+ const AdddialogVisible = ref(false)
 const DeleteCreatedialogVisible = ref(false)
 const DeletedialogVisible = ref(false)
 const addSongTolistdialogVisible = ref(false)
@@ -27,6 +27,15 @@ const formLabelAlign = ref({
   profile: ""
 }) 
 
+onMounted(()=>{
+  listStore.getLikeSongs()
+
+  listStore.getLikeList()
+  listStore.getCreateList()
+  userInfo.getUserInfo(userInfo.info.id)
+})
+
+
 //上部用户信息
 import useUserInfoStore from '../../stores/userInfo.js'
 
@@ -37,12 +46,7 @@ import useListStore from '../../stores/playList.js'
 
 const listStore = useListStore()
 
-onMounted(()=>{
-  listStore.getLikeSongs()
 
-  listStore.getLikeList()
-  listStore.getCreateList()
-})
 
 const likeSongs = ref([])
 
@@ -65,7 +69,7 @@ const router = useRouter();
 
     <div class="person-pages">
       <el-tabs v-model="hhhName" class="my-tabs" >
-      <el-tab-pane label="我喜欢" name="first">
+       <el-tab-pane label="我喜欢" name="first">
           <el-tabs v-model="likeName" class="like-tabs">
             <el-tab-pane label="歌曲" class="table-wrapper" name="first1">
               <el-table :data="listStore.likeSongs" height="350" class="songs" :header-cell-style="{
@@ -102,7 +106,7 @@ const router = useRouter();
             </el-tab-pane>
           </el-tabs>
         </el-tab-pane>
-       <el-tab-pane label="我的歌单" name="second" class="table-wrapper">
+      <el-tab-pane label="我的歌单" name="second" >
           <el-table :data="listStore.createList" height="400px" class="songs" :header-cell-style="{
             background: 'transparent',
             height: '45px', border: 'none'
@@ -111,22 +115,22 @@ const router = useRouter();
             <el-table-column prop="number" label="歌曲数目" width="250px" />
             <el-table-column prop="profile" label="歌曲简介" width="600px" />
             <el-table-column label="删除" width="250px">
-              <template v-slot="scope">
+              <template v-slot="scope2">
                 <el-button :icon="Delete" class="delete" background="transparent" circle
-                  @click="DeleteCreatedialogVisible = true,currentlistid=scope.row.id" />
+                  @click="DeleteCreatedialogVisible = true, currentlistid=scope2.row.id" />
               </template>
             </el-table-column>
           </el-table>
-        </el-tab-pane>
+        </el-tab-pane> 
         <el-tab-pane label="音乐画像" name="third">
           <el-carousel :interval="4000" type="card" height="400px" class="userIn">
             <el-carousel-item class="userInfo1">
               <div class="user-info">
                 <h1>基本资料</h1>
-                <h2></h2>
-                <p>性别: </p>
-                <p>年龄: </p>
-                <p>爱听音乐的男孩</p>
+                <h2>{{userInfo.info.nickname}}</h2>
+                <p>性别: {{userInfo.info.sex}}</p>
+                <p>年龄:{{userInfo.info.age}} </p>
+                <p>{{ userInfo.info.desc }}</p>
               </div>
             </el-carousel-item>
             <el-carousel-item class="userInfo2">
@@ -289,8 +293,6 @@ const router = useRouter();
 }
 
 
-
-
 .my-tabs {
   ::v-deep .el-tabs__item {
     color: #fff;
@@ -305,10 +307,10 @@ const router = useRouter();
     color: #2E8CAC;
   }         
   
-  .el-tabs__active-bar {
+  ::v-deep .el-tabs__active-bar {
   background-color: #2E8CAC;
   text-align: center;
-  width: 100px !important;
+  width: 40px !important;
   /* 不加important  不会生效，important会覆盖行内样式权限级别*/
   left: 0%;
   /* 根据实际情设置，尽量居中就行*/
@@ -346,39 +348,7 @@ const router = useRouter();
 
 }
 
-// .like-tabs {
-//   color: #FFFFFF;
-//   margin-top: 10px;
 
-//   .like-tabs>.el-tabs__item.is-active {
-//     color: #2E8CAC;
-
-//   }
-
-//   .el-tabs__item {
-//     color: #fff;
-//     font-size: 14px;
-//     vertical-align: middle;
-
-//   }
-
-//   .el-tabs__item.is-active {
-//     color: #2E8CAC;
-//   }
-
-//   .el-tabs__item:hover {
-//     color: #2E8CAC;
-//   }
-
-
-
-//   .el-tabs__nav-wrap::after {
-
-//     display: none;
-//   }
-
-
-// }
 
 
 

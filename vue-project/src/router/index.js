@@ -8,8 +8,8 @@ import Player from '@/views/Player/index.vue'
 import Person from '@/views/Person/index.vue'
 import Home from '@/views/Home/index.vue'
 import Search from '@/views/Search/index.vue'
-import Update from '@/views/Person/UpdatePerson.vue'
-
+import Update from '@/views/Person/updatePerson.vue'
+import Playlist from '@/views/Playlist/index.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   //path和components对应关系的位置
@@ -43,6 +43,10 @@ const router = createRouter({
           {
             path: 'search',
             component: Search
+          },
+          {
+            path: 'playlist/:id',
+            component: Playlist
           }
         ]
     },
