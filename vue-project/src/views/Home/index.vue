@@ -4,6 +4,8 @@ import { onMounted ,ref} from 'vue';
 import useUserInfoStore from '../../stores/userInfo.js'
 import { storeToRefs } from 'pinia'
 import { Plus, CaretRight } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus'
+
 
 const userInfo = useUserInfoStore();
 const  {info} = storeToRefs(userInfo);
@@ -28,9 +30,18 @@ const getNewSongList = async() => {
         newSongList.value = data.data ? data.data.slice(0, 20) : ``;
 
       } catch (error) {
-        console.error('获取新歌失败:', error);
+        // console.error('获取新歌失败:', error);
+        ElMessage({
+            type: "warning",
+            message: "获取新歌失败:"+error
+        })
       }
 }
+
+
+
+
+
 
 import currentsongStore from '../../stores/currentSong';
 import currentListStore from '../../stores/currentList';

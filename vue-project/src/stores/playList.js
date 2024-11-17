@@ -59,12 +59,34 @@ const useListStore = defineStore('useListStore',()=>{
     }
 
     const addCreateList = async(data) => {
-        await addCreateListAPI(data)
+        const res = await addCreateListAPI(data)
+        if(res.code == 200) {
+            ElMessage({
+                type: "success",
+                message: "创建歌单成功"
+            })
+        } else {
+            ElMessage({
+                type: "warning",
+                message: "创建歌单失败"
+            })
+        }
         await getCreateList()
     } 
 
     const addSongToList = async(data) => {
-        await addSongToListAPI(data)
+        const res = await addSongToListAPI(data)
+        if(res.code == 200) {
+            ElMessage({
+                type: "success",
+                message: res.message
+            })
+        } else {
+            ElMessage({
+                type: "warning",
+                message: res.message
+            })
+        }
         await getCreateList()
     }
 

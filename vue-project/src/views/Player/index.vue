@@ -128,6 +128,7 @@ watch(songId, async(songId, newsongId)=>{
 <style lang="less" scoped>
 .player {
   display: flex;
+  user-select: none; 
 
 }
 

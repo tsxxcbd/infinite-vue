@@ -22,6 +22,7 @@ export default {
         { id: 2, text: 'Hi', isMe: true },
       ],
       resSongId: '',
+      //addcurrentsongid: '',
       ans: {},
       id: ''
     };
@@ -43,7 +44,7 @@ export default {
         // 获取 ans 字段的值
         const answerText = response.ans;
         this.resSongId = response.id;
-        this.addcurrentsongid = response.id;
+        //this.addcurrentsongid = response.id;
         console.log(answerText);
 
         // 将回答添加到 messages 数组中
@@ -114,7 +115,7 @@ export default {
             album: album.value,
             songName: songName.value,
             artist: singer.value,
-            songid: id.value
+            songid: id
         }
         currentList.addSongToCurrent(selectedProps)
     }
@@ -152,7 +153,7 @@ export default {
         </el-col>
         <el-col :span="12">
           <el-button type="primary" @click="handleSend">发送</el-button>
-          <el-button @click="addToCurrentList(addcurrentsongId)" class="addToCurrent iconfont icon-24gf-playlist4" circle />
+          <el-button @click="addToCurrentList(resSongId)" class="addToCurrent iconfont icon-24gf-playlist4" circle />
           <el-button @click="addSongTolistdialogVisible = true" type="primary" circle class="addToList" >+</el-button>
 
         </el-col>
@@ -179,7 +180,7 @@ export default {
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="addSongTolistdialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="listStore.addSongToList({id: addcurrentlistId, songId: addcurrentsongId}), addSongTolistdialogVisible = false">
+        <el-button type="primary" @click="listStore.addSongToList({id: addcurrentlistId, songId: resSongId}), addSongTolistdialogVisible = false">
           确定
         </el-button>
       </span>
@@ -220,9 +221,6 @@ export default {
 
 }
 
-.message-container {
-  margin-bottom: 10px;
-}
 
 .message {
   padding: 5px;
@@ -241,12 +239,6 @@ export default {
   background-color: #fff;
 }
 
-.input-form {
-  position: absolute;
-  bottom: 20px;
-  /* 距离底部50px */
-  left: 45px;
-}
 
 
 .inputText {
@@ -269,4 +261,17 @@ export default {
   background-color: #000;
   font-size: 20px;
 }
-</style>
+
+.input-form {
+  position: absolute;
+  bottom: 10px;
+  /* 距离底部50px */
+  left: 45px;
+}
+
+.message-container
+ {
+  max-height: 400px;
+  overflow-y: scroll;
+ }
+ </style>

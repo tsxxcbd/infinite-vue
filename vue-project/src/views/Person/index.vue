@@ -55,6 +55,10 @@ import { useRouter } from 'vue-router'
 const router = useRouter();
 
 
+const handleRowDoubleClick2 =(row) => {
+  router.push(`playlist/${row.id}`)
+}
+
 </script>
 
 <template>
@@ -91,8 +95,8 @@ const router = useRouter();
             <el-tab-pane label="歌单" class="table-wrapper"  name="third1">
               <el-table :data=listStore.likeList height="350" class="songs" :header-cell-style="{
                 background: 'transparent',
-                height: '45px', border: 'none'
-              }">
+                height: '45px', border: 'none' 
+              }" @row-dblclick="handleRowDoubleClick2">
                 <el-table-column prop="name" label="歌单名" width="400px" />
                 <el-table-column prop="creatorname" label="创作者" width="250px" />
                 <el-table-column prop="number" label="歌曲数目" width="250px" />
@@ -110,7 +114,7 @@ const router = useRouter();
           <el-table :data="listStore.createList" height="400px" class="songs" :header-cell-style="{
             background: 'transparent',
             height: '45px', border: 'none'
-          }">
+          }" @row-dblclick="handleRowDoubleClick2">
             <el-table-column prop="name" label="歌单名" width="300px" />
             <el-table-column prop="number" label="歌曲数目" width="250px" />
             <el-table-column prop="profile" label="歌曲简介" width="600px" />

@@ -161,6 +161,8 @@ const  {info} = storeToRefs(userInfo);
   position: relative;
   margin-left: 10px;
   border-radius: 50%;
+  user-select: none; 
+
 }
 
 .title {
@@ -245,6 +247,8 @@ const  {info} = storeToRefs(userInfo);
   display: flex;
   align-items: center;
   margin-left: 250px;
+  user-select: none; 
+
 }
 
 

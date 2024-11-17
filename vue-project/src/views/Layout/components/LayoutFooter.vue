@@ -301,9 +301,9 @@ const isLike = ref(currentSong.isLike)
             </template>
             </el-table-column>
             <el-table-column>
-                <template #default="{ row }">
+                <template #default="{ row, $index  }">
                     <el-button :icon="Delete" background="transparent" circle
-                    @click="listStore.deleteSong(row.id)"></el-button>
+                    @click="listStore.deleteSong( $index )"></el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -380,6 +380,7 @@ const isLike = ref(currentSong.isLike)
     left: 50%;
     height: 160px;
     transform: translate(-50%, 0);
+    user-select: none; 
 
     /* 底部播放 */
     .song-info {
